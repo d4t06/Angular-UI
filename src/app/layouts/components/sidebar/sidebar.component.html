@@ -1,0 +1,91 @@
+<ng-template #link>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    class="w-[24px] flex-shrink-0"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25"
+    />
+  </svg>
+</ng-template>
+
+<div [ngClass]="[classes.container, expand ? '!w-[180px]' : '']">
+  <div [class]="classes.head">
+    <h1 [ngClass]="classes.logoText">
+      @if(expand) { React <span class="text-[#cd1818]">UI</span> } @else {
+      R<span class="text-[#cd1818]">UI</span>}
+    </h1>
+  </div>
+
+  @for (r of ROUTES; track $index) {
+
+ 
+      <a
+      [routerLink]="r.path"
+      [ngClass]="[classes.item, expand ? '!justify-start' : '']"
+    >
+      <ng-template [ngTemplateOutlet]="link"></ng-template>
+  
+      @if(expand) {
+        <span>
+          {{ r.title }}
+        </span>
+      }
+    </a>
+   
+
+  }
+
+
+
+  <div class="!absolute bottom-[20px] right-0 translate-x-[50%] z-[10]">
+    <app-button
+      border="clear"
+      size="clear"
+      className="p-[6px]"
+      (click)="toggleExpand()"
+      class="bg-red-500"
+    >
+      @if (expand) {
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="w-[22px]"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M15.75 19.5 8.25 12l7.5-7.5"
+        />
+      </svg>
+
+      } @else {
+
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="w-[22px]"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m8.25 4.5 7.5 7.5-7.5 7.5"
+        />
+      </svg>
+
+      }
+    </app-button>
+  </div>
+</div>

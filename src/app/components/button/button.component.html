@@ -1,0 +1,38 @@
+<ng-template #children>
+  <ng-content />
+</ng-template>
+
+<a
+  *ngIf="href"
+  [routerLink]="href"
+  [ngClass]="
+    ButtonVariant({
+      variant,
+      size,
+      colors,
+      border,
+      fontWeight,
+      className
+    })
+  "
+>
+  <ng-template [ngTemplateOutlet]="children"></ng-template>
+</a>
+
+<button
+  *ngIf="!href"
+  [disabled]="false"
+  (click)="onClick()"
+  [ngClass]="
+    ButtonVariant({
+      variant,
+      size: size ,
+      colors,
+      border,
+      fontWeight,
+      className
+    })
+  "
+>
+  <ng-template [ngTemplateOutlet]="children"></ng-template>
+</button>

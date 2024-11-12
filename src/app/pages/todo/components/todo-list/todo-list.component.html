@@ -1,0 +1,34 @@
+<div class="mt-[30px] space-y-[10px]">
+  @for (todo of todoList; track todo.name+$index) {
+  <div class="flex items-center justify-between border p-[10px] rounded-[8px]">
+    <span [ngClass]="todo.complete ? 'line-through' : ''">{{ todo.name }}</span>
+    <div class="flex items-center">
+      <input
+        class="scale-[1.5]"
+        type="checkbox"
+        (change)="handleTodoAction({ variant: 'complete', index: $index })"
+      />
+      <app-button
+        (click)="handleTodoAction({ variant: 'delete', index: $index })"
+        className="p-[4px] ml-[10px]"
+        size="clear"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-[22px]"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+          />
+        </svg>
+      </app-button>
+    </div>
+  </div>
+  }
+</div>

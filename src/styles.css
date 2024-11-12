@@ -1,4 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* @import url("@angular/cdk/overlay-prebuilt.css"); */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.cdk-overlay-container {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+}
+.cdk-overlay-container:empty {
+    display: none;
+}
+.cdk-overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 99;
+  transition: opacity linear 1s;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.32);
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+  opacity: 1;
+}

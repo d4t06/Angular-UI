@@ -1,0 +1,9 @@
+<form action="" (submit)="$event.preventDefault(); handleAddNewTodo()">
+  <input
+    type="text"
+    name="newTodo"
+    [(ngModel)]="newTodo"
+    class="bg-[#f1f1f1] py-[4px] px-[12px] outline-none border-[1px] rounded-[8px]"
+  />
+  <app-button type="submit" className="ml-[10px]"> Add </app-button>
+</form>

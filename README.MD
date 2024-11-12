@@ -13,3 +13,17 @@
 
 ### update 18/6/2024
 
+```
+<ng-template #projected>
+  <ng-content/>
+</ng-template>
+
+<div *ngIf="template === '1'">
+  <ng-container *ngTemplateOutlet="projected" />
+</div>
+
+<div *ngIf="template === '2'">
+  <ng-container *ngTemplateOutlet="projected" />
+</div>
+```
+
