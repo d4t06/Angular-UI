@@ -1,53 +1,61 @@
-import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
-import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import {
-  Component,
-  Input,
-  ViewChild,
-} from '@angular/core';
-import { ModalHeaderComponent } from './modal-header.component';
-import { NgClass } from '@angular/common';
+import { Overlay, OverlayRef } from "@angular/cdk/overlay";
+import { CdkPortal, PortalModule } from "@angular/cdk/portal";
+import { Component, Input, ViewChild, inject } from "@angular/core";
+import { ModalHeaderComponent } from "./modal-header.component";
+import { NgClass } from "@angular/common";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
-  selector: 'app-my-modal',
+  selector: "app-my-modal",
   standalone: true,
   imports: [PortalModule, ModalHeaderComponent, NgClass],
-  templateUrl: './my-modal.component.html',
+  templateUrl: "./my-modal.component.html",
 })
 export class MyModalComponent {
-  @Input({required: true}) title : string
+  @Input({ required: true }) title: string;
   @ViewChild(CdkPortal) portal: CdkPortal;
 
+  isMounted = new BehaviorSubject<boolean>(false);
+  isOpen = new BehaviorSubject<boolean>(false);
+
   overlayRef: OverlayRef;
-  isOpen = false;
 
-  constructor(private overlay: Overlay) {}
-
-
-  // overlayConfig = new OverlayConfig({
-  // positionStrategy: this.overlay
-  //   .position()
-  //   .global()
-  //   .centerHorizontally()
-  //   .centerVertically(),
-  // hasBackdrop: true,
-  // });
-
-  classes = {
-    active: 'opacity-[1]',
-  };
+  overlay = inject(Overlay);
 
   open() {
-    this.isOpen = true;
+    this.isOpen.next(true);
 
     this.overlayRef = this.overlay.create();
 
-    this.overlayRef.backdropClick().subscribe(() => this.close());
     this.overlayRef.attach(this.portal);
+    this.overlayRef.backdropClick().subscribe(() => this.close());
   }
 
   close() {
-    this.isOpen = false;
-    if (this.overlayRef) this.overlayRef.detach();
+    this.isMounted.next(false);
   }
+
+  ngOnInit() {
+    this.isMounted.subscribe((isMounted) => {
+      if (!isMounted)
+        setTimeout(() => {
+          this.isOpen.next(false);
+          if (this.overlayRef) this.overlayRef.detach();
+        }, 200);
+    });
+
+    this.isOpen.subscribe((isOpen) => {
+      if (isOpen)
+        setTimeout(() => {
+          this.isMounted.next(true);
+        }, 0);
+    });
+  }
+
+  classes = {
+    unMountedContent: "opacity-0 scale-[.95]",
+    mountedContent: "opacity-100 scale-[1]",
+    unMountedLayer: "opacity-0",
+    mountedLayer: "opacity-100",
+  };
 }

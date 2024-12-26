@@ -1,21 +1,27 @@
 <ng-template cdkPortal>
-  <div
-    (click)="close()"
-    [class]="[
-      'absolute',
-      'inset-0',
-      'z-99',
-      'bg-black/40',
-      'opacity-0',
-      'transition-opacity',
-      isOpen ? classes.active : ''
-    ]"
-  ></div>
+  @if (isOpen.getValue()) {
+    <div class="fixed z-[99] inset-full">
+      <div
+        (click)="close()"
+        [ngClass]="[
+          'absolute inset-0 z-[99] bg-black/40 transition-opacity ease-linear duration-200',
+          isMounted.getValue() ? classes.mountedLayer : classes.unMountedLayer,
+        ]"
+      ></div>
 
-  <div
-    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y1/2 z-[99] bg-white p-3 md:p-4 rounded-xl max-w-[calc(90vw-40px)] min-w-[400px]"
-  >
-    <app-modal-header (closeModal)="close()" [title]="title" />
-    <ng-content />
-  </div>
+      <div
+        [ngClass]="[
+          'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[99] transition-[opacity,transform] ease-linear duration-200',
+          isMounted.getValue()
+            ? classes.mountedContent
+            : classes.unMountedContent,
+        ]"
+      >
+        <div class="bg-white p-3 rounded-lg">
+          <app-modal-header (closeModal)="close()" [title]="title" />
+          <ng-content />
+        </div>
+      </div>
+    </div>
+  }
 </ng-template>

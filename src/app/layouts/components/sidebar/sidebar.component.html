@@ -15,34 +15,48 @@
   </svg>
 </ng-template>
 
-<div [ngClass]="[classes.container, expand ? '!w-[180px]' : '']">
+<div
+  [ngClass]="[
+    classes.container,
+    expand ? '!w-[180px]' : '',
+    themeService.getIsDark()
+      ? 'bg-slate-700 text-white border-white/15'
+      : 'bg-white text-[#333] border-black/15'
+  ]"
+>
   <div [class]="classes.head">
     <h1 [ngClass]="classes.logoText">
-      @if(expand) { React <span class="text-[#cd1818]">UI</span> } @else {
-      R<span class="text-[#cd1818]">UI</span>}
+      @if(expand) { Angular <span class="text-[#cd1818]">UI</span> } @else {
+      A<span class="text-[#cd1818]">UI</span>}
     </h1>
   </div>
 
   @for (r of ROUTES; track $index) {
 
- 
-      <a
-      [routerLink]="r.path"
-      [ngClass]="[classes.item, expand ? '!justify-start' : '']"
-    >
-      <ng-template [ngTemplateOutlet]="link"></ng-template>
-  
-      @if(expand) {
-        <span>
-          {{ r.title }}
-        </span>
-      }
-    </a>
-   
+  <a
+    [routerLink]="r.path"
+    [routerLinkActive]="classes.itemActive"
+    [routerLinkActiveOptions]="{ exact: true }"
+    [ngClass]="[classes.item, expand ? '!justify-start' : '']"
+  >
+    <ng-template [ngTemplateOutlet]="link"></ng-template>
 
+    @if(expand) {
+    <span>
+      {{ r.title }}
+    </span>
+    }
+  </a>
+
+  <p></p>
+
+  } @if (expand) {
+
+  <p class="absolute bottom-2 left-2 text-sm whitespace-nowrap">
+    Make with <span class="#cd1818">❤️</span> <br />
+    by Nguyen Huu Dat
+  </p>
   }
-
-
 
   <div class="!absolute bottom-[20px] right-0 translate-x-[50%] z-[10]">
     <app-button
@@ -50,38 +64,33 @@
       size="clear"
       className="p-[6px]"
       (click)="toggleExpand()"
-      class="bg-red-500"
     >
       @if (expand) {
+
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="2"
-        stroke="currentColor"
-        class="w-[22px]"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        class="w-6"
       >
         <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M15.75 19.5 8.25 12l7.5-7.5"
+          fill-rule="evenodd"
+          d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+          clip-rule="evenodd"
         />
       </svg>
 
       } @else {
-
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="2"
-        stroke="currentColor"
-        class="w-[22px]"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        class="w-6"
       >
         <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="m8.25 4.5 7.5 7.5-7.5 7.5"
+          fill-rule="evenodd"
+          d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+          clip-rule="evenodd"
         />
       </svg>
 

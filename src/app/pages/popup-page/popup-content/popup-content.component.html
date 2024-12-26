@@ -1,0 +1,28 @@
+<ng-template cdkPortal #content>
+  @if (popupService.isOpen.getValue()) {
+    <div
+      #contentRef
+      [ngClass]="[
+        'bg-transparent',
+        popupService.appendTo === 'portal' ? 'fixed z-[99]' : 'absolute',
+        className,
+      ]"
+    >
+      <div
+        #animationRef
+        [ngClass]="[
+          'bg-transparent transition-[transform,opacity] duration-[.25s] ease-linear',
+          popupService.isMounted.getValue()
+            ? classes.mountedContent
+            : classes.unMountedContent,
+        ]"
+      >
+        <ng-content />
+      </div>
+    </div>
+  }
+</ng-template>
+
+<ng-container *ngIf="popupService.appendTo === 'parent'">
+  <ng-container *ngTemplateOutlet="content" />
+</ng-container>

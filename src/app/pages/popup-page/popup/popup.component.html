@@ -1,0 +1,13 @@
+<ng-template #projected>
+	<ng-content />
+</ng-template>
+
+<ng-container *ngIf="appendTo === 'portal'">
+	<ng-container *ngTemplateOutlet="projected" />
+</ng-container>
+
+<ng-container *ngIf="appendTo === 'parent'">
+	<div class="relative">
+		<ng-container *ngTemplateOutlet="projected" />
+	</div>
+</ng-container>
