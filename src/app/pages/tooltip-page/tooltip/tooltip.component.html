@@ -1,0 +1,37 @@
+<ng-template #content>
+  <ng-content />
+</ng-template>
+
+<ng-template #mainContent>
+  <div *ngIf="!popupService" #triggerRef>
+    <ng-container *ngTemplateOutlet="content" />
+  </div>
+
+  <ng-container *ngIf="!!popupService">
+    <ng-container *ngTemplateOutlet="content" />
+  </ng-container>
+
+  <div
+    *ngIf="!popupService?.isOpen?.getValue() && open"
+    [ngClass]="[
+      classes.container,
+      'absolute whitespace-nowrap -translate-x-1/2 left-1/2 rounded-md',
+      position,
+      className
+    ]"
+  >
+    {{ contentText }}
+  </div>
+</ng-template>
+
+<ng-container
+  *ngIf="wrap || popupService?.appendTo === 'portal'; else elseBlock"
+>
+  <div class="relative">
+    <ng-container *ngTemplateOutlet="mainContent" />
+  </div>
+</ng-container>
+
+<ng-template #elseBlock>
+  <ng-container *ngTemplateOutlet="mainContent" />
+</ng-template>

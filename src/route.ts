@@ -4,6 +4,7 @@ import { LoginComponent } from './app/pages/login/login.component';
 import { ModalComponent } from './app/pages/modal/modal.component';
 import { PopupPageComponent } from './app/pages/popup-page/popup-page.component';
 import { TodoComponent } from './app/pages/todo/todo.component';
+import { TooltipPageComponent } from './app/pages/tooltip-page/tooltip-page.component';
 
 export const ROUTES: {
   path: string;
@@ -36,5 +37,10 @@ export const ROUTES: {
     path: 'popup',
     title: 'Popup',
     page: PopupPageComponent,
+  },
+    {
+    path: 'tooltip',
+    title: 'Tooltip',
+    page: TooltipPageComponent,
   },
 ];
