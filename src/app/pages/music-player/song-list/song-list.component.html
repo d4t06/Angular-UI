@@ -1,0 +1,10 @@
+<div class="max-h-[40vh] overflow-auto no-scrollbar">
+  <ng-container *ngFor="let song of playerService.songs; index as i">
+    <app-song-list-item
+      [active]="playerService.currentIndex === i"
+      [song]="song"
+      [index]="i"
+      (setCurrentSong)="handleSetSong(i)"
+    />
+  </ng-container>
+</div>

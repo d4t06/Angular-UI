@@ -1,28 +1,27 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 import {
   getLocalStorage,
   setLocalStorage,
-} from '../../../share/utils/appHelper';
+} from "../../../share/utils/appHelper";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
-
 export class ThemeService {
-  private isDark: BehaviorSubject<boolean>;
+  isDark: BehaviorSubject<boolean>;
 
   constructor() {
     // console.log('call');
 
     const storage = getLocalStorage();
-    this.isDark = new BehaviorSubject(storage['is_dark'] || false);
+    this.isDark = new BehaviorSubject(storage["is_dark"] || false);
   }
 
   toggle() {
     const newValue = !this.isDark.value;
     this.isDark.next(newValue);
-    setLocalStorage('is_dark', newValue);
+    setLocalStorage("is_dark", newValue);
   }
 
   getIsDark() {

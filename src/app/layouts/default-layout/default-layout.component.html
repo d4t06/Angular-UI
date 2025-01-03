@@ -3,14 +3,10 @@
   <app-toggle-theme-btn />
   <div
     [ngClass]="[
-      'relative w-full overflow-auto',
-      themeService.getIsDark() ? 'bg-[#242424] text-white' : 'bg-white'
+      'flex-1 relative flex items-center justify-center',
+      themeService.getIsDark() ? 'bg-[#242424] text-white' : 'bg-white',
     ]"
   >
-    <div
-      class="absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%]"
-    >
-      <router-outlet />
-    </div>
+    <router-outlet />
   </div>
 </div>

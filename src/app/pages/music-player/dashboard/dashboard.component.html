@@ -1,0 +1,141 @@
+<div class="dashboard w-[400px] max-w-[75vw]">
+  <div
+    class="p-3 bg-amber-800 text-amber-100 rounded-[16px] border-[4px] border-amber-900 border-b-[8px]"
+  >
+    <div [ngClass]="handleShowHide(playerService.tab === 'playing')">
+      <div class="text-center cursor-pointer">
+        <p class="font-bold text-2xl line-clamp-1">
+          {{ playerService.currentSong?.name || "..." }}
+        </p>
+        <p class="text-sm font-medium line-clamp-1">
+          {{ playerService.currentSong?.singer || "..." }}
+        </p>
+      </div>
+
+      <div
+        [ngClass]="[
+          !playerService.currentSong ? 'disabled' : '',
+          'h-[6px] mt-5 mb-2 flex items-center'
+        ]"
+      >
+        <div
+          #timeLineRef
+          (click)="playingService.handleSeek($event)"
+          [ngClass]="classes.timeLineRef"
+        >
+          <div #timeLineHolderRef [ngClass]="classes.timeLineHolderRef"></div>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center h-[30px]">
+        <div #currentTimeRef>0:00</div>
+        <div>
+          {{ formatTime(playerService.currentSong?.duration || 0) }}
+        </div>
+      </div>
+
+      <div class="flex my-2 justify-center items-center space-x-3">
+        <app-button
+          (myClick)="playingService.handlePrevious()"
+          [disabled]="!playerService.songs.length"
+          colors="four"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061A1.125 1.125 0 0 1 21 8.689v8.122ZM11.25 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061a1.125 1.125 0 0 1 1.683.977v8.122Z"
+            />
+          </svg>
+        </app-button>
+
+        <app-button
+          (myClick)="_handlePlayPause()"
+          colors="four"
+          [ngSwitch]="audioService.status"
+        >
+          <svg
+            *ngSwitchCase="'waiting'"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-8 animate-spin"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+            />
+          </svg>
+          <svg
+            *ngSwitchCase="'paused'"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"
+            />
+          </svg>
+
+          <svg
+            *ngSwitchCase="'playing'"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 5.25v13.5m-7.5-13.5v13.5"
+            />
+          </svg>
+        </app-button>
+
+        <app-button
+          (myClick)="playingService.handleNext()"
+          [disabled]="!playerService.songs.length"
+          colors="four"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z"
+            />
+          </svg>
+        </app-button>
+      </div>
+    </div>
+
+    <div [ngClass]="handleShowHide(playerService.tab === 'queue')">
+      <app-song-list />
+    </div>
+  </div>
+</div>
+
+<app-change-tab-btn />

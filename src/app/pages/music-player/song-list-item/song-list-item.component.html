@@ -1,0 +1,7 @@
+<div (click)="setCurrentSong.emit()" [ngClass]="[classes.container ,getActiveClass()]">
+	<div class="">
+		<h5 class="">{{ song.name }}</h5>
+		<p class="text-sm">{{ song.singer }}</p>
+	</div>
+	<span class="">{{ formatTime(song.duration) }}</span>
+</div>

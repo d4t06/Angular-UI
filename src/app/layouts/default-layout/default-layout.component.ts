@@ -10,10 +10,7 @@ import { NgClass } from "@angular/common";
   standalone: true,
   imports: [RouterOutlet, SidebarComponent, ToggleThemeBtnComponent, NgClass],
   templateUrl: "./default-layout.component.html",
-  styleUrl: "./default-layout.component.css",
 })
 export class DefaultLayoutComponent {
-
-   themeService = inject(ThemeService)
-
+  themeService = inject(ThemeService);
 }
